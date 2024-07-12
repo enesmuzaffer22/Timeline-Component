@@ -6,14 +6,15 @@
   
   .app-container {
     display: flex;
-    align-items: end;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100vh;
     background-color: aqua;
   }
   
   .row {
-    height: 25%;
+    height: 60px;
     width: 100%;
     background-color: #f2f2f2;
     border-bottom: 0.1vw solid gray;
@@ -25,17 +26,16 @@
       position: absolute;
       background-color: red;
       border: none;
-      width: 20%; // Buton genişliği yüzde olarak belirlenir.
+      width: 400px; // Buton genişliği yüzde olarak belirlenir.
       min-width: 50px; // Minimum genişlik ayarlanır.
       font-size: 1vw;
     }
   }
   
   .timeline-container {
-    width: 5000px;
+    width: 20000px;
     display: flex;
     flex-direction: column;
-    height: 40%;
   }
   
   .resize-grip {
@@ -58,7 +58,7 @@
 
   .timeline {
     position: relative;
-    height: 0;
+    height: 20px;
     border-bottom: 1px solid #ccc;
     display: flex;
 }
@@ -71,4 +71,10 @@
     color: #333;
 }
 
-  
+.timeline-main-container{
+  width: 1200px;
+  height: 480px;
+  border: 2px solid black;
+  overflow: auto;
+  padding: 20px 16px;
+}

@@ -24,27 +24,14 @@ function Timeline() {
         setSelectedTime(second);
     };
 
-    const handleButtonSelect = (name, duration) => {
-        console.log("buton select function");
+    const handleButtonSelect = (name, duration, startTime, endTime) => {
         setSelectedButton(name);
-        console.log(name);
-        const button = buttonRefs.current[name];
-        if (button) {
-            const buttonRect = button.getBoundingClientRect();
-            const rect = timelineRef.current.getBoundingClientRect();
-            const buttonStartX = buttonRect.left - rect.left;
-            const buttonWidth = buttonRect.width;
-            const buttonStartTime = parseFloat(button.dataset.startTime);
-            const relativeTime = (buttonWidth / interval).toFixed(1);
-
-            setButtonInfo({
-                name: name,
-                time: (parseFloat(selectedTime) - buttonStartTime).toFixed(1) + 's',
-                startTime: buttonStartTime,
-                endTime: (buttonStartTime + parseFloat(relativeTime)).toFixed(1),
-                duration: relativeTime
-            });
-        }
+        setButtonInfo({
+            name: name,
+            duration: duration + 's',
+            start: startTime.toFixed(1) + 's',
+            end: endTime.toFixed(1) + 's'
+        });
     };
 
     const handleMouseDown = (e) => {

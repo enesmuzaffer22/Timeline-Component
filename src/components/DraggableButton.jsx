@@ -10,6 +10,20 @@ const DraggableButton = ({ name, startTime, onSelect, setButtonRef }) => {
     const buttonRef = useRef(null);
     const rowRef = useRef(null);
 
+    const updateButtonInfo = () => {
+        if (buttonRef.current) {
+            const buttonRect = buttonRef.current.getBoundingClientRect();
+            const timelineRect = rowRef.current.getBoundingClientRect();
+            const buttonStartTime = (buttonRect.left - timelineRect.left) / 80;
+            const buttonEndTime = buttonStartTime + (buttonRect.width / 80);
+            const duration = (buttonRect.width / 80).toFixed(1); // 80px = 1s
+            
+            if (onSelect) {
+                onSelect(name, duration, buttonStartTime, buttonEndTime);
+            }
+        }
+    };
+
     const onMouseDown = (e) => {
         if (e.target.classList.contains('resize-grip-left') || e.target.classList.contains('resize-grip-right')) {
             setIsResizing(true);
@@ -35,6 +49,7 @@ const DraggableButton = ({ name, startTime, onSelect, setButtonRef }) => {
             if (newLeft > maxLeft) newLeft = maxLeft;
 
             buttonRef.current.style.left = newLeft + 'px';
+            updateButtonInfo();
         } else if (isResizing) {
             const dx = e.clientX - startX;
             let newWidth;
@@ -53,9 +68,8 @@ const DraggableButton = ({ name, startTime, onSelect, setButtonRef }) => {
 
             buttonRef.current.style.width = newWidth + 'px';
             buttonRef.current.style.left = newLeft + 'px';
-
-            // Buton boyutu değiştiğinde bilgi güncelle
-            if (onSelect) onSelect(name, (newWidth / 80).toFixed(1)); // 80px = 1s
+            
+            updateButtonInfo();
         }
     };
 
@@ -67,11 +81,8 @@ const DraggableButton = ({ name, startTime, onSelect, setButtonRef }) => {
     const handleClick = (e) => {
         e.stopPropagation(); // Diğer olayları engellemek için
         if (onSelect) {
-            console.log("tıklandı");
             setButtonRef(buttonRef.current);
-            const width = buttonRef.current.getBoundingClientRect().width;
-            const duration = (width / 80).toFixed(1); // 80px = 1s
-            onSelect(name, duration);
+            updateButtonInfo();
         }
     };
 
@@ -92,9 +103,7 @@ const DraggableButton = ({ name, startTime, onSelect, setButtonRef }) => {
 
     useEffect(() => {
         if (buttonRef.current) {
-            const width = buttonRef.current.getBoundingClientRect().width;
-            const newDuration = (width / 80).toFixed(1); // 80px = 1s
-            if (onSelect) onSelect(name, newDuration);
+            updateButtonInfo();
         }
     }, [buttonRef.current]);
 

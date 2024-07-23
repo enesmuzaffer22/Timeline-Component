@@ -20,8 +20,8 @@ const ButtonInfoTable = ({ buttonInfo }) => {
           <tr>
             <td>{buttonInfo.name}</td>
             <td>{buttonInfo.duration}</td>
-            <td>{buttonInfo.start}s</td>
-            <td>{buttonInfo.end}s</td>
+            <td>{buttonInfo.start}</td>
+            <td>{buttonInfo.end}</td>
           </tr>
         </tbody>
       </table>

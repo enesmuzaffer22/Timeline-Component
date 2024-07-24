@@ -88,11 +88,7 @@ function Timeline() {
 
     return (
         <div className="timeline-main-container">
-            {selectedTime !== null && (
-                <div className="timeline-info">
-                    Seçilen saniye: {selectedTime}s
-                </div>
-            )}
+            <ButtonInfoTable buttonInfo={buttonInfo} />
             <div className="timeline" ref={timelineRef} style={{ width: `${timelineWidth}px` }} onClick={handleClick} onMouseDown={handleMouseDown}>
                 {renderTimelineTicks()}
                 {marker && (
@@ -115,7 +111,6 @@ function Timeline() {
                     </div>
                 ))}
             </div>
-            <ButtonInfoTable buttonInfo={buttonInfo} />
         </div>
     );
 }

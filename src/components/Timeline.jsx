@@ -83,7 +83,7 @@ function Timeline() {
 
     const groups = [
         { name: 'Grup 1', buttons: ['buton-1', 'buton-2'] },
-        { name: 'Grup 2', buttons: ['buton-3', 'buton-4', 'button-5'] },
+        { name: 'Grup 2', buttons: ['buton-3', 'buton-4'] },
     ];
 
     return (
@@ -93,6 +93,12 @@ function Timeline() {
                     Seçilen saniye: {selectedTime}s
                 </div>
             )}
+            <div className="timeline" ref={timelineRef} style={{ width: `${timelineWidth}px` }} onClick={handleClick} onMouseDown={handleMouseDown}>
+                {renderTimelineTicks()}
+                {marker && (
+                    <div className="timeline-marker" style={{ left: marker.x }}></div>
+                )}
+            </div>
             <div className="timeline-container">
                 {groups.map((group, groupIndex) => (
                     <div key={groupIndex} className="timeline-group">
@@ -108,21 +114,6 @@ function Timeline() {
                         ))}
                     </div>
                 ))}
-                <div
-                    className="timeline"
-                    ref={timelineRef}
-                    style={{ width: `${timelineWidth}px` }}
-                    onClick={handleClick}
-                    onMouseDown={handleMouseDown}
-                >
-                    {renderTimelineTicks()}
-                    {marker && (
-                        <div
-                            className="timeline-marker"
-                            style={{ left: marker.x }}
-                        ></div>
-                    )}
-                </div>
             </div>
             <ButtonInfoTable buttonInfo={buttonInfo} />
         </div>

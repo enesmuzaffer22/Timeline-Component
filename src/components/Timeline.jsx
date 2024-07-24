@@ -81,6 +81,11 @@ function Timeline() {
         return ticks;
     };
 
+    const groups = [
+        { name: 'Grup 1', buttons: ['buton-1', 'buton-2'] },
+        { name: 'Grup 2', buttons: ['buton-3', 'buton-4', 'button-5'] },
+    ];
+
     return (
         <div className="timeline-main-container">
             {selectedTime !== null && (
@@ -89,6 +94,20 @@ function Timeline() {
                 </div>
             )}
             <div className="timeline-container">
+                {groups.map((group, groupIndex) => (
+                    <div key={groupIndex} className="timeline-group">
+                        <div className="group-label">{group.name}</div>
+                        {group.buttons.map((name, index) => (
+                            <DraggableButton
+                                key={name}
+                                name={name}
+                                startTime={0}
+                                onSelect={handleButtonSelect}
+                                setButtonRef={ref => (buttonRefs.current[name] = ref)}
+                            />
+                        ))}
+                    </div>
+                ))}
                 <div
                     className="timeline"
                     ref={timelineRef}
@@ -104,15 +123,6 @@ function Timeline() {
                         ></div>
                     )}
                 </div>
-                {['buton-1', 'buton-2', 'buton-3', 'buton-4'].map((name, index) => (
-                    <DraggableButton
-                        key={name}
-                        name={name}
-                        startTime={0}
-                        onSelect={handleButtonSelect}
-                        setButtonRef={ref => (buttonRefs.current[name] = ref)}
-                    />
-                ))}
             </div>
             <ButtonInfoTable buttonInfo={buttonInfo} />
         </div>

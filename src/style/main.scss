@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 .app-container {
@@ -109,4 +110,11 @@
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
+  font-size: 12px;
+}
+
+.group-label{
+   margin-bottom: 4px;
+   margin-top: 12px;
+   font-size: 12px;
 }

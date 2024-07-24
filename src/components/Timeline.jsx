@@ -1,16 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DraggableButton from './DraggableButton';
-import ButtonInfoTable from './ButtonInfoTable';
 
-function Timeline() {
+function Timeline({ onButtonSelect }) {
     const timelineWidth = 20000; // Zaman çizelgesinin genişliği (px cinsinden)
     const interval = 80; // Her bir zaman işareti arası uzaklık (px cinsinden)
     const numIntervals = timelineWidth / interval; // Toplam zaman işareti sayısı
 
     const [marker, setMarker] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [selectedButton, setSelectedButton] = useState(null);
-    const [buttonInfo, setButtonInfo] = useState(null);
     const [draggingMarker, setDraggingMarker] = useState(false);
     const timelineRef = useRef(null);
     const buttonRefs = useRef({});
@@ -25,13 +22,14 @@ function Timeline() {
     };
 
     const handleButtonSelect = (name, duration, startTime, endTime) => {
-        setSelectedButton(name);
-        setButtonInfo({
-            name: name,
-            duration: duration + 's',
-            start: startTime.toFixed(1) + 's',
-            end: endTime.toFixed(1) + 's'
-        });
+        if (onButtonSelect) {
+            onButtonSelect({
+                name: name,
+                duration: duration + 's',
+                start: startTime.toFixed(1) + 's',
+                end: endTime.toFixed(1) + 's'
+            });
+        }
     };
 
     const handleMouseDown = (e) => {
@@ -88,7 +86,11 @@ function Timeline() {
 
     return (
         <div className="timeline-main-container">
-            <ButtonInfoTable buttonInfo={buttonInfo} />
+            {selectedTime !== null && (
+                <div className="timeline-info">
+                    Seçilen saniye: {selectedTime}s
+                </div>
+            )}
             <div className="timeline" ref={timelineRef} style={{ width: `${timelineWidth}px` }} onClick={handleClick} onMouseDown={handleMouseDown}>
                 {renderTimelineTicks()}
                 {marker && (
